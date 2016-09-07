@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinataoshu.mapper.SellerMapper" >
+  <resultMap id="BaseResultMap" type="com.chinataoshu.pojo.Seller" >
+    <id column="SellerId" property="sellerid" jdbcType="INTEGER" />
+    <result column="CardNo" property="cardno" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.chinataoshu.pojo.SellerWithBLOBs" extends="BaseResultMap" >
+    <result column="CardPhoto" property="cardphoto" jdbcType="LONGVARBINARY" />
+    <result column="Photo" property="photo" jdbcType="LONGVARBINARY" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    SellerId, CardNo
+  </sql>
+  <sql id="Blob_Column_List" >
+    CardPhoto, Photo
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.chinataoshu.pojo.SellerExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from seller
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinataoshu.pojo.SellerExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from seller
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from seller
+    where SellerId = #{sellerid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from seller
+    where SellerId = #{sellerid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chinataoshu.pojo.SellerExample" >
+    delete from seller
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chinataoshu.pojo.SellerWithBLOBs" >
+    insert into seller (SellerId, CardNo, CardPhoto, 
+      Photo)
+    values (#{sellerid,jdbcType=INTEGER}, #{cardno,jdbcType=VARCHAR}, #{cardphoto,jdbcType=LONGVARBINARY}, 
+      #{photo,jdbcType=LONGVARBINARY})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinataoshu.pojo.SellerWithBLOBs" >
+    insert into seller
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sellerid != null" >
+        SellerId,
+      </if>
+      <if test="cardno != null" >
+        CardNo,
+      </if>
+      <if test="cardphoto != null" >
+        CardPhoto,
+      </if>
+      <if test="photo != null" >
+        Photo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sellerid != null" >
+        #{sellerid,jdbcType=INTEGER},
+      </if>
+      <if test="cardno != null" >
+        #{cardno,jdbcType=VARCHAR},
+      </if>
+      <if test="cardphoto != null" >
+        #{cardphoto,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="photo != null" >
+        #{photo,jdbcType=LONGVARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinataoshu.pojo.SellerExample" resultType="java.lang.Integer" >
+    select count(*) from seller
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update seller
+    <set >
+      <if test="record.sellerid != null" >
+        SellerId = #{record.sellerid,jdbcType=INTEGER},
+      </if>
+      <if test="record.cardno != null" >
+        CardNo = #{record.cardno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cardphoto != null" >
+        CardPhoto = #{record.cardphoto,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="record.photo != null" >
+        Photo = #{record.photo,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update seller
+    set SellerId = #{record.sellerid,jdbcType=INTEGER},
+      CardNo = #{record.cardno,jdbcType=VARCHAR},
+      CardPhoto = #{record.cardphoto,jdbcType=LONGVARBINARY},
+      Photo = #{record.photo,jdbcType=LONGVARBINARY}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update seller
+    set SellerId = #{record.sellerid,jdbcType=INTEGER},
+      CardNo = #{record.cardno,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinataoshu.pojo.SellerWithBLOBs" >
+    update seller
+    <set >
+      <if test="cardno != null" >
+        CardNo = #{cardno,jdbcType=VARCHAR},
+      </if>
+      <if test="cardphoto != null" >
+        CardPhoto = #{cardphoto,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="photo != null" >
+        Photo = #{photo,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    where SellerId = #{sellerid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.chinataoshu.pojo.SellerWithBLOBs" >
+    update seller
+    set CardNo = #{cardno,jdbcType=VARCHAR},
+      CardPhoto = #{cardphoto,jdbcType=LONGVARBINARY},
+      Photo = #{photo,jdbcType=LONGVARBINARY}
+    where SellerId = #{sellerid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinataoshu.pojo.Seller" >
+    update seller
+    set CardNo = #{cardno,jdbcType=VARCHAR}
+    where SellerId = #{sellerid,jdbcType=INTEGER}
+  </update>
+</mapper>

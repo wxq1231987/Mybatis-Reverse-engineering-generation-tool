@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinataoshu.mapper.OrderdetailsMapper" >
+  <resultMap id="BaseResultMap" type="com.chinataoshu.pojo.Orderdetails" >
+    <result column="OrderId" property="orderid" jdbcType="VARCHAR" />
+    <result column="Price" property="price" jdbcType="REAL" />
+    <result column="Num" property="num" jdbcType="INTEGER" />
+    <result column="AddrId" property="addrid" jdbcType="INTEGER" />
+    <result column="Evaluation" property="evaluation" jdbcType="VARCHAR" />
+    <result column="Postage" property="postage" jdbcType="VARCHAR" />
+    <result column="CreaTime" property="creatime" jdbcType="DATE" />
+    <result column="Note" property="note" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    OrderId, Price, Num, AddrId, Evaluation, Postage, CreaTime, Note
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinataoshu.pojo.OrderdetailsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from orderdetails
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.chinataoshu.pojo.OrderdetailsExample" >
+    delete from orderdetails
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chinataoshu.pojo.Orderdetails" >
+    insert into orderdetails (OrderId, Price, Num, 
+      AddrId, Evaluation, Postage, 
+      CreaTime, Note)
+    values (#{orderid,jdbcType=VARCHAR}, #{price,jdbcType=REAL}, #{num,jdbcType=INTEGER}, 
+      #{addrid,jdbcType=INTEGER}, #{evaluation,jdbcType=VARCHAR}, #{postage,jdbcType=VARCHAR}, 
+      #{creatime,jdbcType=DATE}, #{note,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinataoshu.pojo.Orderdetails" >
+    insert into orderdetails
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderid != null" >
+        OrderId,
+      </if>
+      <if test="price != null" >
+        Price,
+      </if>
+      <if test="num != null" >
+        Num,
+      </if>
+      <if test="addrid != null" >
+        AddrId,
+      </if>
+      <if test="evaluation != null" >
+        Evaluation,
+      </if>
+      <if test="postage != null" >
+        Postage,
+      </if>
+      <if test="creatime != null" >
+        CreaTime,
+      </if>
+      <if test="note != null" >
+        Note,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderid != null" >
+        #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=REAL},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="addrid != null" >
+        #{addrid,jdbcType=INTEGER},
+      </if>
+      <if test="evaluation != null" >
+        #{evaluation,jdbcType=VARCHAR},
+      </if>
+      <if test="postage != null" >
+        #{postage,jdbcType=VARCHAR},
+      </if>
+      <if test="creatime != null" >
+        #{creatime,jdbcType=DATE},
+      </if>
+      <if test="note != null" >
+        #{note,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinataoshu.pojo.OrderdetailsExample" resultType="java.lang.Integer" >
+    select count(*) from orderdetails
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update orderdetails
+    <set >
+      <if test="record.orderid != null" >
+        OrderId = #{record.orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null" >
+        Price = #{record.price,jdbcType=REAL},
+      </if>
+      <if test="record.num != null" >
+        Num = #{record.num,jdbcType=INTEGER},
+      </if>
+      <if test="record.addrid != null" >
+        AddrId = #{record.addrid,jdbcType=INTEGER},
+      </if>
+      <if test="record.evaluation != null" >
+        Evaluation = #{record.evaluation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postage != null" >
+        Postage = #{record.postage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creatime != null" >
+        CreaTime = #{record.creatime,jdbcType=DATE},
+      </if>
+      <if test="record.note != null" >
+        Note = #{record.note,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update orderdetails
+    set OrderId = #{record.orderid,jdbcType=VARCHAR},
+      Price = #{record.price,jdbcType=REAL},
+      Num = #{record.num,jdbcType=INTEGER},
+      AddrId = #{record.addrid,jdbcType=INTEGER},
+      Evaluation = #{record.evaluation,jdbcType=VARCHAR},
+      Postage = #{record.postage,jdbcType=VARCHAR},
+      CreaTime = #{record.creatime,jdbcType=DATE},
+      Note = #{record.note,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

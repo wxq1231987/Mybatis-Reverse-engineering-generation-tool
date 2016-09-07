@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinataoshu.mapper.ShopbookMapper" >
+  <resultMap id="BaseResultMap" type="com.chinataoshu.pojo.Shopbook" >
+    <result column="ShopId" property="shopid" jdbcType="INTEGER" />
+    <result column="BookNo" property="bookno" jdbcType="INTEGER" />
+    <result column="BookTile" property="booktile" jdbcType="VARCHAR" />
+    <result column="Price" property="price" jdbcType="REAL" />
+    <result column="ItemStatus" property="itemstatus" jdbcType="CHAR" />
+    <result column="FrightTemplate" property="frighttemplate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ShopId, BookNo, BookTile, Price, ItemStatus, FrightTemplate
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinataoshu.pojo.ShopbookExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from shopbook
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.chinataoshu.pojo.ShopbookExample" >
+    delete from shopbook
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chinataoshu.pojo.Shopbook" >
+    insert into shopbook (ShopId, BookNo, BookTile, 
+      Price, ItemStatus, FrightTemplate
+      )
+    values (#{shopid,jdbcType=INTEGER}, #{bookno,jdbcType=INTEGER}, #{booktile,jdbcType=VARCHAR}, 
+      #{price,jdbcType=REAL}, #{itemstatus,jdbcType=CHAR}, #{frighttemplate,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinataoshu.pojo.Shopbook" >
+    insert into shopbook
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="shopid != null" >
+        ShopId,
+      </if>
+      <if test="bookno != null" >
+        BookNo,
+      </if>
+      <if test="booktile != null" >
+        BookTile,
+      </if>
+      <if test="price != null" >
+        Price,
+      </if>
+      <if test="itemstatus != null" >
+        ItemStatus,
+      </if>
+      <if test="frighttemplate != null" >
+        FrightTemplate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="shopid != null" >
+        #{shopid,jdbcType=INTEGER},
+      </if>
+      <if test="bookno != null" >
+        #{bookno,jdbcType=INTEGER},
+      </if>
+      <if test="booktile != null" >
+        #{booktile,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=REAL},
+      </if>
+      <if test="itemstatus != null" >
+        #{itemstatus,jdbcType=CHAR},
+      </if>
+      <if test="frighttemplate != null" >
+        #{frighttemplate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinataoshu.pojo.ShopbookExample" resultType="java.lang.Integer" >
+    select count(*) from shopbook
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update shopbook
+    <set >
+      <if test="record.shopid != null" >
+        ShopId = #{record.shopid,jdbcType=INTEGER},
+      </if>
+      <if test="record.bookno != null" >
+        BookNo = #{record.bookno,jdbcType=INTEGER},
+      </if>
+      <if test="record.booktile != null" >
+        BookTile = #{record.booktile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null" >
+        Price = #{record.price,jdbcType=REAL},
+      </if>
+      <if test="record.itemstatus != null" >
+        ItemStatus = #{record.itemstatus,jdbcType=CHAR},
+      </if>
+      <if test="record.frighttemplate != null" >
+        FrightTemplate = #{record.frighttemplate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update shopbook
+    set ShopId = #{record.shopid,jdbcType=INTEGER},
+      BookNo = #{record.bookno,jdbcType=INTEGER},
+      BookTile = #{record.booktile,jdbcType=VARCHAR},
+      Price = #{record.price,jdbcType=REAL},
+      ItemStatus = #{record.itemstatus,jdbcType=CHAR},
+      FrightTemplate = #{record.frighttemplate,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

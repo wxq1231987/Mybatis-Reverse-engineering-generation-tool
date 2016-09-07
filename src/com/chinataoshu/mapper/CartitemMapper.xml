@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinataoshu.mapper.CartitemMapper" >
+  <resultMap id="BaseResultMap" type="com.chinataoshu.pojo.Cartitem" >
+    <id column="CartItemId" property="cartitemid" jdbcType="INTEGER" />
+    <result column="CartId" property="cartid" jdbcType="INTEGER" />
+    <result column="BookNo" property="bookno" jdbcType="INTEGER" />
+    <result column="Quantity" property="quantity" jdbcType="INTEGER" />
+    <result column="Price" property="price" jdbcType="REAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    CartItemId, CartId, BookNo, Quantity, Price
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinataoshu.pojo.CartitemExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cartitem
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cartitem
+    where CartItemId = #{cartitemid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cartitem
+    where CartItemId = #{cartitemid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chinataoshu.pojo.CartitemExample" >
+    delete from cartitem
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chinataoshu.pojo.Cartitem" >
+    insert into cartitem (CartItemId, CartId, BookNo, 
+      Quantity, Price)
+    values (#{cartitemid,jdbcType=INTEGER}, #{cartid,jdbcType=INTEGER}, #{bookno,jdbcType=INTEGER}, 
+      #{quantity,jdbcType=INTEGER}, #{price,jdbcType=REAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinataoshu.pojo.Cartitem" >
+    insert into cartitem
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cartitemid != null" >
+        CartItemId,
+      </if>
+      <if test="cartid != null" >
+        CartId,
+      </if>
+      <if test="bookno != null" >
+        BookNo,
+      </if>
+      <if test="quantity != null" >
+        Quantity,
+      </if>
+      <if test="price != null" >
+        Price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cartitemid != null" >
+        #{cartitemid,jdbcType=INTEGER},
+      </if>
+      <if test="cartid != null" >
+        #{cartid,jdbcType=INTEGER},
+      </if>
+      <if test="bookno != null" >
+        #{bookno,jdbcType=INTEGER},
+      </if>
+      <if test="quantity != null" >
+        #{quantity,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinataoshu.pojo.CartitemExample" resultType="java.lang.Integer" >
+    select count(*) from cartitem
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update cartitem
+    <set >
+      <if test="record.cartitemid != null" >
+        CartItemId = #{record.cartitemid,jdbcType=INTEGER},
+      </if>
+      <if test="record.cartid != null" >
+        CartId = #{record.cartid,jdbcType=INTEGER},
+      </if>
+      <if test="record.bookno != null" >
+        BookNo = #{record.bookno,jdbcType=INTEGER},
+      </if>
+      <if test="record.quantity != null" >
+        Quantity = #{record.quantity,jdbcType=INTEGER},
+      </if>
+      <if test="record.price != null" >
+        Price = #{record.price,jdbcType=REAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update cartitem
+    set CartItemId = #{record.cartitemid,jdbcType=INTEGER},
+      CartId = #{record.cartid,jdbcType=INTEGER},
+      BookNo = #{record.bookno,jdbcType=INTEGER},
+      Quantity = #{record.quantity,jdbcType=INTEGER},
+      Price = #{record.price,jdbcType=REAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinataoshu.pojo.Cartitem" >
+    update cartitem
+    <set >
+      <if test="cartid != null" >
+        CartId = #{cartid,jdbcType=INTEGER},
+      </if>
+      <if test="bookno != null" >
+        BookNo = #{bookno,jdbcType=INTEGER},
+      </if>
+      <if test="quantity != null" >
+        Quantity = #{quantity,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        Price = #{price,jdbcType=REAL},
+      </if>
+    </set>
+    where CartItemId = #{cartitemid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinataoshu.pojo.Cartitem" >
+    update cartitem
+    set CartId = #{cartid,jdbcType=INTEGER},
+      BookNo = #{bookno,jdbcType=INTEGER},
+      Quantity = #{quantity,jdbcType=INTEGER},
+      Price = #{price,jdbcType=REAL}
+    where CartItemId = #{cartitemid,jdbcType=INTEGER}
+  </update>
+</mapper>

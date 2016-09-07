@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinataoshu.mapper.CustomerMapper" >
+  <resultMap id="BaseResultMap" type="com.chinataoshu.pojo.Customer" >
+    <id column="CusId" property="cusid" jdbcType="INTEGER" />
+    <result column="LoginId" property="loginid" jdbcType="VARCHAR" />
+    <result column="LoginPwd" property="loginpwd" jdbcType="VARCHAR" />
+    <result column="CusTel" property="custel" jdbcType="VARCHAR" />
+    <result column="CusEmail" property="cusemail" jdbcType="VARCHAR" />
+    <result column="CusName" property="cusname" jdbcType="VARCHAR" />
+    <result column="CusBalance" property="cusbalance" jdbcType="REAL" />
+    <result column="AlipayAccount" property="alipayaccount" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.chinataoshu.pojo.Customer" extends="BaseResultMap" >
+    <result column="CusPhoto" property="cusphoto" jdbcType="LONGVARBINARY" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    CusId, LoginId, LoginPwd, CusTel, CusEmail, CusName, CusBalance, AlipayAccount
+  </sql>
+  <sql id="Blob_Column_List" >
+    CusPhoto
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.chinataoshu.pojo.CustomerExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from customer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.chinataoshu.pojo.CustomerExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from customer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from customer
+    where CusId = #{cusid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from customer
+    where CusId = #{cusid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.chinataoshu.pojo.CustomerExample" >
+    delete from customer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.chinataoshu.pojo.Customer" >
+    insert into customer (CusId, LoginId, LoginPwd, 
+      CusTel, CusEmail, CusName, 
+      CusBalance, AlipayAccount, CusPhoto
+      )
+    values (#{cusid,jdbcType=INTEGER}, #{loginid,jdbcType=VARCHAR}, #{loginpwd,jdbcType=VARCHAR}, 
+      #{custel,jdbcType=VARCHAR}, #{cusemail,jdbcType=VARCHAR}, #{cusname,jdbcType=VARCHAR}, 
+      #{cusbalance,jdbcType=REAL}, #{alipayaccount,jdbcType=VARCHAR}, #{cusphoto,jdbcType=LONGVARBINARY}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinataoshu.pojo.Customer" >
+    insert into customer
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cusid != null" >
+        CusId,
+      </if>
+      <if test="loginid != null" >
+        LoginId,
+      </if>
+      <if test="loginpwd != null" >
+        LoginPwd,
+      </if>
+      <if test="custel != null" >
+        CusTel,
+      </if>
+      <if test="cusemail != null" >
+        CusEmail,
+      </if>
+      <if test="cusname != null" >
+        CusName,
+      </if>
+      <if test="cusbalance != null" >
+        CusBalance,
+      </if>
+      <if test="alipayaccount != null" >
+        AlipayAccount,
+      </if>
+      <if test="cusphoto != null" >
+        CusPhoto,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cusid != null" >
+        #{cusid,jdbcType=INTEGER},
+      </if>
+      <if test="loginid != null" >
+        #{loginid,jdbcType=VARCHAR},
+      </if>
+      <if test="loginpwd != null" >
+        #{loginpwd,jdbcType=VARCHAR},
+      </if>
+      <if test="custel != null" >
+        #{custel,jdbcType=VARCHAR},
+      </if>
+      <if test="cusemail != null" >
+        #{cusemail,jdbcType=VARCHAR},
+      </if>
+      <if test="cusname != null" >
+        #{cusname,jdbcType=VARCHAR},
+      </if>
+      <if test="cusbalance != null" >
+        #{cusbalance,jdbcType=REAL},
+      </if>
+      <if test="alipayaccount != null" >
+        #{alipayaccount,jdbcType=VARCHAR},
+      </if>
+      <if test="cusphoto != null" >
+        #{cusphoto,jdbcType=LONGVARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.chinataoshu.pojo.CustomerExample" resultType="java.lang.Integer" >
+    select count(*) from customer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update customer
+    <set >
+      <if test="record.cusid != null" >
+        CusId = #{record.cusid,jdbcType=INTEGER},
+      </if>
+      <if test="record.loginid != null" >
+        LoginId = #{record.loginid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginpwd != null" >
+        LoginPwd = #{record.loginpwd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custel != null" >
+        CusTel = #{record.custel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cusemail != null" >
+        CusEmail = #{record.cusemail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cusname != null" >
+        CusName = #{record.cusname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cusbalance != null" >
+        CusBalance = #{record.cusbalance,jdbcType=REAL},
+      </if>
+      <if test="record.alipayaccount != null" >
+        AlipayAccount = #{record.alipayaccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cusphoto != null" >
+        CusPhoto = #{record.cusphoto,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update customer
+    set CusId = #{record.cusid,jdbcType=INTEGER},
+      LoginId = #{record.loginid,jdbcType=VARCHAR},
+      LoginPwd = #{record.loginpwd,jdbcType=VARCHAR},
+      CusTel = #{record.custel,jdbcType=VARCHAR},
+      CusEmail = #{record.cusemail,jdbcType=VARCHAR},
+      CusName = #{record.cusname,jdbcType=VARCHAR},
+      CusBalance = #{record.cusbalance,jdbcType=REAL},
+      AlipayAccount = #{record.alipayaccount,jdbcType=VARCHAR},
+      CusPhoto = #{record.cusphoto,jdbcType=LONGVARBINARY}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update customer
+    set CusId = #{record.cusid,jdbcType=INTEGER},
+      LoginId = #{record.loginid,jdbcType=VARCHAR},
+      LoginPwd = #{record.loginpwd,jdbcType=VARCHAR},
+      CusTel = #{record.custel,jdbcType=VARCHAR},
+      CusEmail = #{record.cusemail,jdbcType=VARCHAR},
+      CusName = #{record.cusname,jdbcType=VARCHAR},
+      CusBalance = #{record.cusbalance,jdbcType=REAL},
+      AlipayAccount = #{record.alipayaccount,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinataoshu.pojo.Customer" >
+    update customer
+    <set >
+      <if test="loginid != null" >
+        LoginId = #{loginid,jdbcType=VARCHAR},
+      </if>
+      <if test="loginpwd != null" >
+        LoginPwd = #{loginpwd,jdbcType=VARCHAR},
+      </if>
+      <if test="custel != null" >
+        CusTel = #{custel,jdbcType=VARCHAR},
+      </if>
+      <if test="cusemail != null" >
+        CusEmail = #{cusemail,jdbcType=VARCHAR},
+      </if>
+      <if test="cusname != null" >
+        CusName = #{cusname,jdbcType=VARCHAR},
+      </if>
+      <if test="cusbalance != null" >
+        CusBalance = #{cusbalance,jdbcType=REAL},
+      </if>
+      <if test="alipayaccount != null" >
+        AlipayAccount = #{alipayaccount,jdbcType=VARCHAR},
+      </if>
+      <if test="cusphoto != null" >
+        CusPhoto = #{cusphoto,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    where CusId = #{cusid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.chinataoshu.pojo.Customer" >
+    update customer
+    set LoginId = #{loginid,jdbcType=VARCHAR},
+      LoginPwd = #{loginpwd,jdbcType=VARCHAR},
+      CusTel = #{custel,jdbcType=VARCHAR},
+      CusEmail = #{cusemail,jdbcType=VARCHAR},
+      CusName = #{cusname,jdbcType=VARCHAR},
+      CusBalance = #{cusbalance,jdbcType=REAL},
+      AlipayAccount = #{alipayaccount,jdbcType=VARCHAR},
+      CusPhoto = #{cusphoto,jdbcType=LONGVARBINARY}
+    where CusId = #{cusid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinataoshu.pojo.Customer" >
+    update customer
+    set LoginId = #{loginid,jdbcType=VARCHAR},
+      LoginPwd = #{loginpwd,jdbcType=VARCHAR},
+      CusTel = #{custel,jdbcType=VARCHAR},
+      CusEmail = #{cusemail,jdbcType=VARCHAR},
+      CusName = #{cusname,jdbcType=VARCHAR},
+      CusBalance = #{cusbalance,jdbcType=REAL},
+      AlipayAccount = #{alipayaccount,jdbcType=VARCHAR}
+    where CusId = #{cusid,jdbcType=INTEGER}
+  </update>
+</mapper>
